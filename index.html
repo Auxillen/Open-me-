@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Open the Envelope 💌</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: #fff0f8;
+      overflow: hidden;
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      perspective: 1200px;
+      z-index: 2;
+    }
+
+    .envelope {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background: #f8bbd0;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      cursor: pointer;
+      overflow: hidden;
+      border: 3px solid #e1bee7;
+    }
+
+    .lotus {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 60px;
+      color: #ba68c8;
+      z-index: 3;
+      transition: opacity 0.5s;
+    }
+
+    .envelope.open .lotus {
+      opacity: 0;
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #f48fb1;
+      transform-origin: top;
+      transform: rotateX(0deg);
+      transition: transform 1s ease;
+      border-radius: 8px 8px 0 0;
+      z-index: 2;
+    }
+
+    .envelope.open .flap {
+      transform: rotateX(-130deg);
+    }
+
+    .paper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #fff0f5;
+      width: 100%;
+      height: 100%;
+      padding: 30px;
+      box-sizing: border-box;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+      z-index: 1;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.6rem;
+      color: #ab47bc;
+    }
+
+    .envelope.open .paper {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .flower {
+      position: fixed;
+      top: -50px;
+      width: 32px;
+      height: 32px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Convallaria_majalis_close-up_2.jpg/32px-Convallaria_majalis_close-up_2.jpg');
+      background-size: cover;
+      animation: fall linear infinite;
+      z-index: 1;
+      opacity: 0.7;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-60px) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .button {
+      margin-top: 10px;
+      padding: 10px 16px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      text-decoration: none;
+      background: #e1bee7;
+      color: #6a1b9a;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background: #f8bbd0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="envelope-wrapper" onclick="toggleEnvelope()">
+  <div class="envelope" id="envelope">
+    <div class="lotus" id="lotus">🌸</div>
+    <div class="flap"></div>
+    <div class="paper">
+      <div>
+        Happy Anniversary my beautiful girl Cristal 💖<br>
+        I love you so much
+      </div>
+      <a class="button" href="https://auxillen.github.io/Happy-Anniversary/" target="_blank">Click here 💕</a>
+    </div>
+  </div>
+</div>
+
+<audio id="music" preload="auto">
+  <source src="https://www.bensound.com/bensound-music/bensound-longnight.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  function toggleEnvelope() {
+    const envelope = document.getElementById("envelope");
+    const music = document.getElementById("music");
+
+    envelope.classList.toggle("open");
+
+    if (envelope.classList.contains("open")) {
+      music.volume = 0.2;
+      music.play();
+    } else {
+      music.pause();
+      music.currentTime = 0;
+    }
+  }
+
+  // Create falling flowers
+  const NUM_FLOWERS = 30;
+  for (let i = 0; i < NUM_FLOWERS; i++) {
+    const flower = document.createElement('div');
+    flower.className = 'flower';
+    flower.style.left = `${Math.random() * 100}vw`;
+    flower.style.animationDuration = `${6 + Math.random() * 5}s`;
+    flower.style.animationDelay = `${Math.random() * 5}s`;
+    document.body.appendChild(flower);
+  }
+</script>
+
+</body>
+</html>
